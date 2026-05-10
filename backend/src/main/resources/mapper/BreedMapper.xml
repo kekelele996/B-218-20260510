@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.mapper.BreedMapper">
+
+    <resultMap id="BreedResultMap" type="com.petadoption.entity.BreedDict">
+        <id property="id" column="id"/>
+        <result property="petType" column="pet_type"/>
+        <result property="breedName" column="breed_name"/>
+        <result property="sortOrder" column="sort_order"/>
+    </resultMap>
+
+    <select id="selectByPetType" resultMap="BreedResultMap">
+        SELECT * FROM breed_dict WHERE pet_type = #{petType} ORDER BY sort_order
+    </select>
+
+    <select id="selectAll" resultMap="BreedResultMap">
+        SELECT * FROM breed_dict ORDER BY pet_type, sort_order
+    </select>
+
+    <select id="selectDistinctPetTypes" resultType="string">
+        SELECT DISTINCT pet_type FROM breed_dict ORDER BY pet_type
+    </select>
+
+</mapper>
