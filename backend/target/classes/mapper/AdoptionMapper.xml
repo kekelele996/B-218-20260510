@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.mapper.AdoptionMapper">
+
+    <resultMap id="AdoptionResultMap" type="com.petadoption.entity.AdoptionApplication">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="petId" column="pet_id"/>
+        <result property="livingType" column="living_type"/>
+        <result property="housingType" column="housing_type"/>
+        <result property="hasYard" column="has_yard"/>
+        <result property="experience" column="experience"/>
+        <result property="currentPets" column="current_pets"/>
+        <result property="dailyTime" column="daily_time"/>
+        <result property="reason" column="reason"/>
+        <result property="contactAddress" column="contact_address"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.petadoption.entity.AdoptionApplication" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO adoption_application (user_id, pet_id, living_type, housing_type, has_yard, experience,
+                                          current_pets, daily_time, reason, contact_address, status, create_time, update_time)
+        VALUES (#{userId}, #{petId}, #{livingType}, #{housingType}, #{hasYard}, #{experience},
+                #{currentPets}, #{dailyTime}, #{reason}, #{contactAddress}, #{status}, NOW(), NOW())
+    </insert>
+
+    <select id="selectByUserId" resultMap="AdoptionResultMap">
+        SELECT * FROM adoption_application
+        WHERE user_id = #{userId}
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectCountByUserId" resultType="long">
+        SELECT COUNT(1) FROM adoption_application
+        WHERE user_id = #{userId}
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <select id="selectById" resultMap="AdoptionResultMap">
+        SELECT * FROM adoption_application WHERE id = #{id}
+    </select>
+
+    <update id="updateStatus">
+        UPDATE adoption_application SET status = #{status}, update_time = NOW() WHERE id = #{id}
+    </update>
+
+    <select id="existsByUserIdAndPetId" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM adoption_application
+        WHERE user_id = #{userId} AND pet_id = #{petId} AND status IN (0, 1, 2)
+    </select>
+
+</mapper>
