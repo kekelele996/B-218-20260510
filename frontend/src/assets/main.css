@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #3B82F6;
+  --color-secondary: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-background: #FFF4F4;
+  --color-text: #4A2D2D;
+  --color-pink: #FF85A2;
+  --color-yellow: #FFD600;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+/* 隐藏滚动条 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 卡片样式 */
+.card-playful {
+  background: white;
+  border: 4px solid black;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 6px 6px 0px var(--shadow-color, #000);
+}
+
+/* 按钮样式 */
+.btn-playful {
+  background: #4ADE80;
+  border: 3px solid black;
+  box-shadow: 4px 4px 0px black;
+  transition: all 0.1s;
+}
+
+.btn-playful:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px black;
+}
+
+.btn-main {
+  background: #4ADE80;
+  border: 4px solid black;
+  border-radius: 1.5rem;
+  padding: 16px;
+  width: 100%;
+  font-weight: 900;
+  font-size: 18px;
+  box-shadow: 6px 6px 0px black;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+
+.btn-main:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0px black;
+}
+
+.btn-main:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-pink {
+  background: #FF85A2;
+}
+
+/* 输入框样式 */
+.input-playful {
+  background: white;
+  border: 4px solid black;
+  border-radius: 1.2rem;
+  padding: 12px 16px;
+  font-weight: 700;
+  width: 100%;
+  outline: none;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.input-playful:focus {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px black;
+}
+
+/* 响应式断点 */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+
+  /* PC端调整 */
+  body {
+    display: flex;
+    justify-content: center;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* 动画 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Toast动画 */
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.toast-enter {
+  animation: toastIn 0.3s ease-out;
+}
+
+.toast-leave {
+  animation: toastOut 0.3s ease-in;
+}

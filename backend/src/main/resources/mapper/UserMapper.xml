@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.petadoption.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="realName" column="real_name"/>
+        <result property="avatar" column="avatar"/>
+        <result property="address" column="address"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.petadoption.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (username, password, phone, email, real_name, avatar, address, status, create_time, update_time)
+        VALUES (#{username}, #{password}, #{phone}, #{email}, #{realName}, #{avatar}, #{address}, #{status}, NOW(), NOW())
+    </insert>
+
+    <select id="selectById" resultMap="UserResultMap">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="selectByUsername" resultMap="UserResultMap">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+
+    <select id="selectByPhone" resultMap="UserResultMap">
+        SELECT * FROM user WHERE phone = #{phone}
+    </select>
+
+    <update id="update" parameterType="com.petadoption.entity.User">
+        UPDATE user
+        <set>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="address != null">address = #{address},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE user SET password = #{password}, update_time = NOW() WHERE id = #{id}
+    </update>
+
+    <select id="existsByUsername" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM user WHERE username = #{username}
+    </select>
+
+    <select id="existsByPhone" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM user WHERE phone = #{phone}
+    </select>
+
+    <select id="existsByPhoneAndIdNot" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM user WHERE phone = #{phone} AND id != #{id}
+    </select>
+
+</mapper>
